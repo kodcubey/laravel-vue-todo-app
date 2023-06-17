@@ -1,9 +1,8 @@
 <?php
 
-use App\Models\GetAllData;
-use Illuminate\Http\Request;
+use App\Http\Controllers\TodoController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Validator;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,47 +14,8 @@ use Illuminate\Support\Facades\Validator;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/get-all-data', function () {
-    return response()->json(GetAllData::all());
-});
-
-Route::post('/add-item', function (Request $request) {
-    $validator = Validator::make($request->all(), [
-        'title' => 'required',
-    ]);
-
-    if ($validator->fails()) {
-        return response()->json([
-            "errors" => $validator->errors(),
-        ]);
-    }
-
-    GetAllData::create([
-        'title' => $request->all()["title"],
-        'description' => $request->all()["description"],
-        'isTrue' => 0
-    ]);
-
-    return response()->json(GetAllData::all());
-});
-
-Route::get('/completed-item/{id}', function (Request $request, $id) {
-    $getId = GetAllData::where('id', $id)->get()[0]->isTrue;
-
-    if (!$getId) {
-        GetAllData::where('id', $id)->update(['isTrue' => true]);
-        return response()->json(GetAllData::all());
-    }
-
-    GetAllData::where('id', $id)->update(['isTrue' => false]);
-    return response()->json(GetAllData::all());
-});
-
-Route::get('/delete-item/{id}', function (Request $request, $id) {
-    GetAllData::destroy($id);
-    return response()->json(GetAllData::all());
-});
+Route::get('/', [TodoController::class, 'index']);
+Route::get('/get-all-data', [TodoController::class, 'getAllData']);
+Route::post('/add-item', [TodoController::class, 'addItem']);
+Route::get('/completed-item/{id}', [TodoController::class, 'updateCompated']);
+Route::get('/delete-item/{id}', [TodoController::class, 'deleteItem']);

@@ -39,7 +39,6 @@ const store = new createStore({
         },
 
         async addItem({ commit }, data) {
-            console.log(data);
             await fetch(`http://127.0.0.1:8000/add-item`, {
                 headers: {
                     "Content-Type": "application/json",
@@ -55,7 +54,6 @@ const store = new createStore({
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log(data.errors);
                     if (data.errors) {
                         alert("fail");
                     } else {

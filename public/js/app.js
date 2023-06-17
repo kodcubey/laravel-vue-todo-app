@@ -19982,8 +19982,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_0__.createStore({
           while (1) switch (_context4.prev = _context4.next) {
             case 0:
               commit = _ref4.commit;
-              console.log(data);
-              _context4.next = 4;
+              _context4.next = 3;
               return fetch("http://127.0.0.1:8000/add-item", {
                 headers: {
                   "Content-Type": "application/json",
@@ -19997,7 +19996,6 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_0__.createStore({
               }).then(function (response) {
                 return response.json();
               }).then(function (data) {
-                console.log(data.errors);
                 if (data.errors) {
                   alert("fail");
                 } else {
@@ -20006,7 +20004,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_0__.createStore({
               })["catch"](function (err) {
                 return console.log(err);
               });
-            case 4:
+            case 3:
             case "end":
               return _context4.stop();
           }
